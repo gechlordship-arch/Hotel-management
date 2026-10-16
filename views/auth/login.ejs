@@ -1,23 +1,37 @@
-<div class="row justify-content-center">
-  <div class="col-md-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h3 class="mb-4">Login</h3>
-        <form action="/login" method="POST">
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" required />
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" required />
-          </div>
-          <button class="btn btn-primary w-100">Login</button>
-        </form>
-        <p class="mt-3 mb-0 text-center">
-          No account? <a href="/register">Register</a>
-        </p>
+<div class="row g-4 align-items-stretch" style="min-height: 70vh;">
+  <div class="col-lg-6 d-none d-lg-flex">
+    <div class="auth-hero w-100">
+      <p class="tagline mb-2">Luxury · Comfort · Wellness</p>
+      <h1 class="mb-3">Karnid International<br/>Hotel &amp; SPA</h1>
+      <p class="mb-0 text-white-50">
+        Management system — rooms, guests, reservations, spa &amp; billing in one place.
+      </p>
+    </div>
+  </div>
+
+  <div class="col-lg-6 d-flex align-items-center">
+    <div class="card auth-card w-100 p-4 p-md-5">
+      <div class="text-center mb-4">
+        <img src="/images/logo/logo.jpg" alt="Karnid" style="height:60px; border-radius:8px;" />
+        <h3 class="mt-3 mb-1">Welcome to Karnid</h3>
+        <p class="text-muted small mb-0">Sign in to the management system</p>
       </div>
+
+      <form action="/login" method="POST">
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-control" required autofocus />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" required />
+        </div>
+        <button class="btn btn-primary w-100 py-2">Sign In</button>
+      </form>
+
+      <p class="mt-4 mb-0 text-center small text-muted">
+        No account? <a href="/register" class="brand-navy fw-semibold">Register</a>
+      </p>
     </div>
   </div>
 </div>

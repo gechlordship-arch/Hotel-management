@@ -1,4 +1,9 @@
-<h1 class="mb-4">Dashboard</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="mb-0">Dashboard</h1>
+    <p class="text-muted mb-0">Karnid International Hotel &amp; SPA — Management Console</p>
+  </div>
+</div>
 
 <div class="alert alert-info">
   Logged in as <strong><%= currentUser.name %></strong> (<%= currentUser.role %>)
@@ -6,21 +11,68 @@
 
 <div class="row g-3">
   <div class="col-md-4">
-    <div class="card p-3 text-center">
-      <h5>Rooms</h5>
-      <p class="text-muted">Coming next</p>
+    <div class="card h-100">
+      <img src="/images/rooms/room.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
+      <div class="card-body text-center">
+        <h5>Rooms</h5>
+        <p class="text-muted small mb-2">Room inventory &amp; status</p>
+        <span class="badge bg-secondary">Coming next</span>
+      </div>
     </div>
   </div>
+
   <div class="col-md-4">
-    <div class="card p-3 text-center">
-      <h5>Guests</h5>
-      <p class="text-muted">Coming next</p>
+    <div class="card h-100">
+      <img src="/images/hero/hero1.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
+      <div class="card-body text-center">
+        <h5>Guests</h5>
+        <p class="text-muted small mb-2">Guest profiles &amp; history</p>
+        <span class="badge bg-secondary">Coming next</span>
+      </div>
     </div>
   </div>
+
   <div class="col-md-4">
-    <div class="card p-3 text-center">
-      <h5>Reservations</h5>
-      <p class="text-muted">Coming next</p>
+    <div class="card h-100">
+      <img src="/images/rooms/room1.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
+      <div class="card-body text-center">
+        <h5>Reservations</h5>
+        <p class="text-muted small mb-2">Bookings, check-in, check-out</p>
+        <span class="badge bg-secondary">Coming next</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100">
+      <img src="/images/spa/spa.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
+      <div class="card-body text-center">
+        <h5>SPA Services</h5>
+        <p class="text-muted small mb-2">Treatments &amp; wellness bookings</p>
+        <span class="badge bg-secondary">Coming next</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100">
+      <img src="/images/rooms/room2.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
+      <div class="card-body text-center">
+        <h5>Billing</h5>
+        <p class="text-muted small mb-2">Invoices &amp; payments</p>
+        <span class="badge bg-secondary">Coming next</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card h-100">
+      <img src="/images/hero/hero.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
+      <div class="card-body text-center">
+        <h5>Reports</h5>
+        <p class="text-muted small mb-2">Occupancy &amp; revenue analytics</p>
+        <span class="badge bg-secondary">Coming next</span>
+      </div>
     </div>
   </div>
 </div>

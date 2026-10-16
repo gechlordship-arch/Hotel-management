@@ -1,8 +1,135 @@
-body {
-  background: #f7f8fa;
+:root {
+  --karnid-navy: #0B2545;
+  --karnid-navy-light: #13315C;
+  --karnid-gold: #C9A961;
+  --karnid-gold-light: #E0C88A;
+  --karnid-bg: #F5F6F8;
 }
+
+body {
+  background: var(--karnid-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Brand text */
+.brand-navy { color: var(--karnid-navy); }
+.brand-accent { color: var(--karnid-gold); }
+
+/* Navbar */
+.karnid-navbar {
+  background: linear-gradient(90deg, var(--karnid-navy) 0%, var(--karnid-navy-light) 100%);
+  box-shadow: 0 2px 12px rgba(11, 37, 69, 0.18);
+  padding: 0.6rem 0;
+}
+
+.karnid-navbar .navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+}
+
+.brand-text {
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+/* Logo inside a white rounded card (makes JPG look intentional) */
+.karnid-logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.karnid-logo {
+  height: 34px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  display: block;
+}
+
+.karnid-footer-logo {
+  height: 46px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Cards */
 .card {
   border: none;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(11, 37, 69, 0.07);
+}
+
+.card h3, .card h5 {
+  color: var(--karnid-navy);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--karnid-navy);
+  border-color: var(--karnid-navy);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--karnid-navy-light);
+  border-color: var(--karnid-navy-light);
+}
+
+.btn-outline-warning {
+  color: var(--karnid-gold);
+  border-color: var(--karnid-gold);
+}
+.btn-outline-warning:hover {
+  background: var(--karnid-gold);
+  color: var(--karnid-navy);
+}
+
+/* Footer */
+.karnid-footer {
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+/* Login hero panel */
+.auth-hero {
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  min-height: 100%;
+  background-image:
+    linear-gradient(rgba(11, 37, 69, 0.55), rgba(11, 37, 69, 0.75)),
+    url('/images/hero/hero.png');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-hero h1 {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.auth-hero .tagline {
+  color: var(--karnid-gold-light);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+/* Login card larger */
+.auth-card {
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(11, 37, 69, 0.12);
 }
