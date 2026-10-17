@@ -10,5 +10,6 @@ router.get('/dashboard', requireAuth, (req, res) =>
 );
 
 router.use('/rooms', require('./rooms'));
+router.use('/guests', require('./guests'));
 
 module.exports = router;

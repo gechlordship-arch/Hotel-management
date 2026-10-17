@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="mb-0">Edit Guest</h1>
+  <a href="/guests/<%= guest.id %>" class="btn btn-outline-secondary">← Back</a>
+</div>
+
+<div class="card p-4">
+  <form action="/guests/<%= guest.id %>" method="POST">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Full Name *</label>
+        <input type="text" name="full_name" class="form-control" required value="<%= guest.full_name %>" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Phone *</label>
+        <input type="text" name="phone" class="form-control" required value="<%= guest.phone %>" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" value="<%= guest.email || '' %>" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Country</label>
+        <input type="text" name="country" class="form-control" value="<%= guest.country || '' %>" />
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Address</label>
+        <textarea name="address" class="form-control" rows="2"><%= guest.address || '' %></textarea>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">ID Proof Type</label>
+        <select name="id_proof_type" class="form-select">
+          <option value="">— None —</option>
+          <% idTypes.forEach(t => { %>
+            <option value="<%= t %>" <%= t === guest.id_proof_type ? 'selected' : '' %>>
+              <%= t.replace('_', ' ') %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">ID Proof Number</label>
+        <input type="text" name="id_proof_number" class="form-control"
+               value="<%= guest.id_proof_number || '' %>" />
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Notes</label>
+        <textarea name="notes" class="form-control" rows="2"><%= guest.notes || '' %></textarea>
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary">Save Changes</button>
+        <a href="/guests/<%= guest.id %>" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>
