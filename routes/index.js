@@ -9,4 +9,6 @@ router.get('/dashboard', requireAuth, (req, res) =>
   res.render('dashboard', { title: 'Dashboard' })
 );
 
+router.use('/rooms', require('./rooms'));
+
 module.exports = router;

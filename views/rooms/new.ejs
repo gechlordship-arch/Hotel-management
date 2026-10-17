@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="mb-0">Add Room</h1>
+  <a href="/rooms" class="btn btn-outline-secondary">← Back</a>
+</div>
+
+<div class="card p-4">
+  <form action="/rooms" method="POST">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Room Number *</label>
+        <input type="text" name="room_number" class="form-control" required placeholder="e.g. 601" />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Room Type *</label>
+        <select name="room_type_id" class="form-select" required>
+          <option value="">— Select —</option>
+          <% roomTypes.forEach(t => { %>
+            <option value="<%= t.id %>">
+              <%= t.name %> — $<%= Number(t.base_price).toFixed(2) %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Floor *</label>
+        <input type="number" name="floor" class="form-control" required min="1" value="1" />
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-select">
+          <% statuses.forEach(s => { %>
+            <option value="<%= s %>"><%= s %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-md-8">
+        <label class="form-label">Image</label>
+        <select name="image_url" class="form-select">
+          <% images.forEach(img => { %>
+            <option value="<%= img %>"><%= img %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Notes</label>
+        <textarea name="notes" class="form-control" rows="3" placeholder="Optional notes..."></textarea>
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary">Save Room</button>
+        <a href="/rooms" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>

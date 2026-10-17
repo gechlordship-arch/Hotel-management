@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title><%= title %> | Karnid International Hotel & Spa. Injibara</title>
+  <title><%= title %> | Karnid International Hotel & SPA</title>
   <link rel="icon" type="image/jpeg" href="/images/logo/logo.jpg" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
@@ -11,7 +11,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark karnid-navbar mb-4">
     <div class="container">
-     <a class="navbar-brand d-flex align-items-center gap-2" href="<%= currentUser ? '/dashboard' : '/login' %>"></a>
+      <a class="navbar-brand d-flex align-items-center gap-2" href="<%= currentUser ? '/dashboard' : '/login' %>">
         <span class="karnid-logo-wrap">
           <img src="/images/logo/logo.jpg" alt="Karnid" class="karnid-logo" />
         </span>
@@ -19,6 +19,14 @@
           Karnid International <span class="brand-accent">Hotel &amp; SPA</span>
         </span>
       </a>
+
+      <% if (currentUser) { %>
+        <ul class="navbar-nav ms-4 d-none d-lg-flex">
+          <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/rooms">Rooms</a></li>
+        </ul>
+      <% } %>
+
       <div class="ms-auto">
         <% if (currentUser) { %>
           <span class="text-light me-3 d-none d-md-inline">

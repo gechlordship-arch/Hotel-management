@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="mb-0">Room <%= room.room_number %></h1>
+  <div>
+    <a href="/rooms/<%= room.id %>/edit" class="btn btn-outline-secondary">Edit</a>
+    <a href="/rooms" class="btn btn-outline-secondary">← All Rooms</a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <img src="<%= room.image_url || '/images/rooms/room.png' %>"
+         class="img-fluid rounded-3 shadow-sm"
+         alt="Room <%= room.room_number %>" />
+  </div>
+
+  <div class="col-md-6">
+    <div class="card p-4">
+      <dl class="row mb-0">
+        <dt class="col-sm-4">Room Number</dt>
+        <dd class="col-sm-8"><%= room.room_number %></dd>
+
+        <dt class="col-sm-4">Type</dt>
+        <dd class="col-sm-8"><%= room.roomType ? room.roomType.name : '—' %></dd>
+
+        <dt class="col-sm-4">Floor</dt>
+        <dd class="col-sm-8"><%= room.floor %></dd>
+
+        <dt class="col-sm-4">Capacity</dt>
+        <dd class="col-sm-8"><%= room.roomType ? room.roomType.capacity + ' guests' : '—' %></dd>
+
+        <dt class="col-sm-4">Rate</dt>
+        <dd class="col-sm-8">
+          <% if (room.roomType) { %>
+            $<%= Number(room.roomType.base_price).toFixed(2) %> / night
+          <% } else { %>—<% } %>
+        </dd>
+
+        <dt class="col-sm-4">Status</dt>
+        <dd class="col-sm-8">
+          <span class="badge
+            <%= room.status === 'available' ? 'bg-success' : '' %>
+            <%= room.status === 'occupied' ? 'bg-danger' : '' %>
+            <%= room.status === 'cleaning' ? 'bg-warning text-dark' : '' %>
+            <%= room.status === 'maintenance' ? 'bg-secondary' : '' %>
+          "><%= room.status %></span>
+        </dd>
+
+        <% if (room.notes) { %>
+          <dt class="col-sm-4">Notes</dt>
+          <dd class="col-sm-8"><%= room.notes %></dd>
+        <% } %>
+      </dl>
+
+      <hr class="my-4" />
+
+      <h6 class="mb-3">Change Status</h6>
+      <div class="d-flex flex-wrap gap-2">
+        <% ['available','occupied','cleaning','maintenance'].forEach(s => { %>
+          <form action="/rooms/<%= room.id %>/status" method="POST" class="d-inline">
+            <input type="hidden" name="status" value="<%= s %>" />
+            <button class="btn btn-sm <%= s === room.status ? 'btn-primary' : 'btn-outline-primary' %>"
+                    <%= s === room.status ? 'disabled' : '' %>>
+              <%= s %>
+            </button>
+          </form>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>

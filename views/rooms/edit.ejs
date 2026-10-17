@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="mb-0">Edit Room <%= room.room_number %></h1>
+  <a href="/rooms/<%= room.id %>" class="btn btn-outline-secondary">← Back</a>
+</div>
+
+<div class="card p-4">
+  <form action="/rooms/<%= room.id %>" method="POST">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Room Number *</label>
+        <input type="text" name="room_number" class="form-control" required value="<%= room.room_number %>" />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Room Type *</label>
+        <select name="room_type_id" class="form-select" required>
+          <% roomTypes.forEach(t => { %>
+            <option value="<%= t.id %>" <%= t.id === room.room_type_id ? 'selected' : '' %>>
+              <%= t.name %> — $<%= Number(t.base_price).toFixed(2) %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Floor *</label>
+        <input type="number" name="floor" class="form-control" required min="1" value="<%= room.floor %>" />
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-select">
+          <% statuses.forEach(s => { %>
+            <option value="<%= s %>" <%= s === room.status ? 'selected' : '' %>><%= s %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-md-8">
+        <label class="form-label">Image</label>
+        <select name="image_url" class="form-select">
+          <% images.forEach(img => { %>
+            <option value="<%= img %>" <%= img === room.image_url ? 'selected' : '' %>><%= img %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label">Notes</label>
+        <textarea name="notes" class="form-control" rows="3"><%= room.notes || '' %></textarea>
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary">Save Changes</button>
+        <a href="/rooms/<%= room.id %>" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>
