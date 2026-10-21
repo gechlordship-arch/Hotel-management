@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../middlewares/auth');
+const dashboardController = require('../controllers/dashboardController');
 
 router.get('/', (req, res) => res.redirect('/dashboard'));
 router.use('/', require('./auth'));
 
-router.get('/dashboard', requireAuth, (req, res) =>
-  res.render('dashboard', { title: 'Dashboard' })
-);
+// Use the new controller
+router.get('/dashboard', requireAuth, dashboardController.index);
 
 router.use('/rooms', require('./rooms'));
 router.use('/guests', require('./guests'));

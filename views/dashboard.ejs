@@ -1,86 +1,133 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
   <div>
-    <h1 class="mb-0">Dashboard</h1>
-    <p class="text-muted mb-0">Karnid International Hotel &amp; SPA — Management Console</p>
+    <h1 class="mb-0">Command Center</h1>
+    <p class="text-muted mb-0">Welcome back, <%= currentUser.name %>. Here is today's overview.</p>
   </div>
 </div>
 
-<div class="alert alert-info">
-  Logged in as <strong><%= currentUser.name %></strong> (<%= currentUser.role %>)
-</div>
-
-<div class="row g-3">
-  <div class="col-md-4">
-    <a href="/rooms" class="text-decoration-none">
-      <div class="card h-100 card-hover">
-        <img src="/images/rooms/room.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
-        <div class="card-body text-center">
-          <h5 class="brand-navy">Rooms</h5>
-          <p class="text-muted small mb-2">Room inventory &amp; status</p>
-          <span class="badge bg-success">Active</span>
-        </div>
-      </div>
-    </a>
+<!-- Row 1: KPI Cards -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card p-3 h-100 border-start border-4 border-primary shadow-sm">
+      <small class="text-muted fw-bold text-uppercase">Occupancy</small>
+      <h2 class="mb-0 mt-1"><%= stats.occupancyRate %>%</h2>
+      <small class="text-muted"><%= stats.occupiedRooms %> of <%= stats.totalRooms %> rooms occupied</small>
+    </div>
   </div>
-
-  <div class="col-md-4">
-    <a href="/guests" class="text-decoration-none">
-      <div class="card h-100 card-hover">
-        <img src="/images/hero/hero1.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
-        <div class="card-body text-center">
-          <h5 class="brand-navy">Guests</h5>
-          <p class="text-muted small mb-2">Guest profiles &amp; history</p>
-          <span class="badge bg-success">Active</span>
-        </div>
-      </div>
-    </a>
-  </div>
-
-  <div class="col-md-4">
-    <a href="/reservations" class="text-decoration-none">
-      <div class="card h-100 card-hover">
-        <img src="/images/rooms/room1.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
-        <div class="card-body text-center">
-          <h5 class="brand-navy">Reservations</h5>
-          <p class="text-muted small mb-2">Bookings, check-in, check-out</p>
-          <span class="badge bg-success">Active</span>
-        </div>
-      </div>
-    </a>
-  </div>
-
-  <div class="col-md-4">
-    <a href="/spa" class="text-decoration-none">
-      <div class="card h-100 card-hover">
-        <img src="/images/spa/spa.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
-        <div class="card-body text-center">
-          <h5 class="brand-navy">SPA Services</h5>
-          <p class="text-muted small mb-2">Treatments &amp; wellness bookings</p>
-          <span class="badge bg-success">Active</span>
-        </div>
-      </div>
-    </a>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card h-100">
-      <img src="/images/rooms/room2.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
-      <div class="card-body text-center">
-        <h5 class="text-muted">Billing</h5>
-        <p class="text-muted small mb-2">Invoices &amp; payments</p>
-        <span class="badge bg-secondary">Coming next</span>
-      </div>
+  
+  <div class="col-md-3">
+    <div class="card p-3 h-100 border-start border-4 border-success shadow-sm">
+      <small class="text-muted fw-bold text-uppercase">Arrivals Today</small>
+      <h2 class="mb-0 mt-1"><%= stats.arrivalsToday %></h2>
+      <small class="text-muted">Guests expected to check in</small>
     </div>
   </div>
 
-  <div class="col-md-4">
-    <div class="card h-100">
-      <img src="/images/hero/hero.png" class="card-img-top" style="height:140px; object-fit:cover; border-radius:14px 14px 0 0;" />
-      <div class="card-body text-center">
-        <h5 class="text-muted">Reports</h5>
-        <p class="text-muted small mb-2">Occupancy &amp; revenue analytics</p>
-        <span class="badge bg-secondary">Coming next</span>
+  <div class="col-md-3">
+    <div class="card p-3 h-100 border-start border-4 border-warning shadow-sm">
+      <small class="text-muted fw-bold text-uppercase">Departures Today</small>
+      <h2 class="mb-0 mt-1"><%= stats.departuresToday %></h2>
+      <small class="text-muted">Guests expected to check out</small>
+    </div>
+  </div>
+
+    <div class="col-md-3">
+    <div class="card p-3 h-100 border-start border-4 border-info shadow-sm">
+      <small class="text-muted fw-bold text-uppercase">Revenue</small>
+      <h2 class="mb-0 mt-1">$<%= Number(stats.collectedRevenue).toLocaleString('en-US', { minimumFractionDigits: 2 }) %></h2>
+      <small class="text-muted">Collected</small>
+      <div class="mt-1 small text-muted border-top pt-1">
+        Expected: $<%= Number(stats.expectedRevenue).toLocaleString('en-US', { minimumFractionDigits: 2 }) %>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Row 2: Chart & Quick Links -->
+<div class="row g-4 mb-5">
+  <div class="col-md-4">
+    <div class="card p-4 h-100">
+      <h6 class="text-muted fw-bold text-uppercase mb-3">Room Status</h6>
+      <div style="position: relative; height: 200px; width: 100%;">
+        <canvas id="roomStatusChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card p-4 h-100">
+      <h6 class="text-muted fw-bold text-uppercase mb-3">Quick Access</h6>
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-4">
+          <a href="/rooms" class="btn btn-light border w-100 text-start py-3 card-hover text-decoration-none">
+            <span class="fs-4 me-2">🛏️</span> <span class="brand-navy fw-bold">Rooms</span>
+          </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <a href="/guests" class="btn btn-light border w-100 text-start py-3 card-hover text-decoration-none">
+            <span class="fs-4 me-2">👥</span> <span class="brand-navy fw-bold">Guests</span>
+          </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <a href="/reservations" class="btn btn-light border w-100 text-start py-3 card-hover text-decoration-none">
+            <span class="fs-4 me-2">📅</span> <span class="brand-navy fw-bold">Bookings</span>
+          </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <a href="/spa" class="btn btn-light border w-100 text-start py-3 card-hover text-decoration-none">
+            <span class="fs-4 me-2">💆</span> <span class="brand-navy fw-bold">SPA</span>
+            <% if (stats.spaBookingsToday > 0) { %>
+              <span class="badge bg-primary float-end mt-1"><%= stats.spaBookingsToday %> today</span>
+            <% } %>
+          </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+          <a href="/reservations/new" class="btn btn-light border w-100 text-start py-3 card-hover text-decoration-none">
+            <span class="fs-4 me-2">➕</span> <span class="brand-navy fw-bold">New Booking</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('roomStatusChart').getContext('2d');
+    
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Available', 'Occupied', 'Cleaning', 'Maintenance'],
+        datasets: [{
+          data: [
+            <%= stats.availableRooms %>, 
+            <%= stats.occupiedRooms %>, 
+            <%= stats.cleaningRooms %>, 
+            <%= stats.maintenanceRooms %>
+          ],
+          backgroundColor: [
+            '#198754', // Green (Available)
+            '#dc3545', // Red (Occupied)
+            '#ffc107', // Yellow (Cleaning)
+            '#6c757d'  // Grey (Maintenance)
+          ],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { boxWidth: 12, padding: 15 }
+          }
+        }
+      }
+    });
+  });
+</script>
