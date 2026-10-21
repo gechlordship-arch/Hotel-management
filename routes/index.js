@@ -13,5 +13,6 @@ router.use('/rooms', require('./rooms'));
 router.use('/guests', require('./guests'));
 router.use('/reservations', require('./reservations'));
 router.use('/billing', require('./billing'));
+router.use('/spa', require('./spa'));
 
 module.exports = router;

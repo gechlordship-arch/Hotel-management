@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="mb-0">Book SPA Treatment</h1>
+  <a href="/spa" class="btn btn-outline-secondary">← Back</a>
+</div>
+
+<div class="card p-4">
+  <form action="/spa/book" method="POST">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Guest *</label>
+        <select name="guest_id" class="form-select" required>
+          <option value="">— Select Guest —</option>
+          <% guests.forEach(g => { %>
+            <option value="<%= g.id %>"><%= g.full_name %> (<%= g.phone %>)</option>
+          <% }) %>
+        </select>
+      </div>
+      
+      <div class="col-md-6">
+        <label class="form-label">Treatment *</label>
+        <select name="spa_service_id" class="form-select" required>
+          <option value="">— Select Service —</option>
+          <% services.forEach(s => { %>
+            <option value="<%= s.id %>">
+              <%= s.name %> — $<%= Number(s.price).toFixed(2) %> (<%= s.duration_minutes %>m)
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Date *</label>
+        <input type="date" name="booking_date" class="form-control" required value="<%= today %>" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Start Time *</label>
+        <input type="time" name="start_time" class="form-control" required value="10:00" />
+      </div>
+
+      <div class="col-12 mt-4">
+        <button class="btn btn-primary">Confirm Booking</button>
+        <a href="/spa" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>

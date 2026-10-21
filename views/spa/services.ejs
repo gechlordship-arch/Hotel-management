@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="mb-0">SPA Menu</h1>
+    <p class="text-muted mb-0">Available treatments and services</p>
+  </div>
+  <a href="/spa" class="btn btn-outline-secondary">← Back to Bookings</a>
+</div>
+
+<div class="row g-4">
+  <% services.forEach(s => { %>
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 p-4 text-center">
+        <div class="display-6 mb-2">💆</div>
+        <h5 class="brand-navy"><%= s.name %></h5>
+        <p class="text-muted small mb-3"><%= s.description || 'Relax and unwind.' %></p>
+        
+        <div class="d-flex justify-content-center gap-3 mt-auto">
+          <span class="badge bg-light text-dark border"><%= s.duration_minutes %> mins</span>
+          <span class="badge bg-success">$<%= Number(s.price).toFixed(2) %></span>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+</div>
