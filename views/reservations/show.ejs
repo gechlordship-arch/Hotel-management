@@ -1,0 +1,99 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="mb-0">Reservation #<%= reservation.id %></h1>
+    <p class="text-muted mb-0">Created on <%= new Date(reservation.created_at).toLocaleDateString() %></p>
+  </div>
+  <div>
+    <a href="/reservations" class="btn btn-outline-secondary">← All Reservations</a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-8">
+    <div class="card p-4">
+      <h5 class="mb-4">Booking Details</h5>
+      
+      <div class="row mb-4">
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Guest</small>
+          <a href="/guests/<%= reservation.guest_id %>" class="text-decoration-none fw-bold brand-navy fs-5">
+            <%= reservation.guest.full_name %>
+          </a>
+          <div class="text-muted"><%= reservation.guest.phone %></div>
+        </div>
+        <div class="col-sm-6">
+          <small class="text-muted d-block">Room</small>
+          <a href="/rooms/<%= reservation.room_id %>" class="text-decoration-none fw-bold brand-navy fs-5">
+            Room <%= reservation.room.room_number %>
+          </a>
+          <div class="text-muted"><%= reservation.room.roomType.name %></div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row text-center mb-4">
+        <div class="col-4">
+          <small class="text-muted d-block">Check-In</small>
+          <strong><%= new Date(reservation.check_in_date).toLocaleDateString() %></strong>
+        </div>
+        <div class="col-4">
+          <small class="text-muted d-block">Check-Out</small>
+          <strong><%= new Date(reservation.check_out_date).toLocaleDateString() %></strong>
+        </div>
+        <div class="col-4">
+          <small class="text-muted d-block">Guests</small>
+          <strong><%= reservation.adults %> Adults, <%= reservation.children %> Children</strong>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <small class="text-muted d-block">Status</small>
+          <span class="badge fs-6 
+            <%= reservation.status === 'booked' ? 'bg-primary' : '' %>
+            <%= reservation.status === 'checked_in' ? 'bg-success' : '' %>
+            <%= reservation.status === 'checked_out' ? 'bg-secondary' : '' %>
+            <%= reservation.status === 'cancelled' ? 'bg-danger' : '' %>
+          ">
+            <%= reservation.status.replace('_', ' ') %>
+          </span>
+        </div>
+        <div class="text-end">
+          <small class="text-muted d-block">Total Amount</small>
+          <h2 class="mb-0 brand-navy">$<%= Number(reservation.total_amount).toFixed(2) %></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card p-4">
+      <h5 class="mb-3">Actions</h5>
+
+      <% if (reservation.status === 'booked') { %>
+        <form action="/reservations/<%= reservation.id %>/checkin" method="POST" class="mb-2">
+          <button class="btn btn-success w-100">Check In Guest</button>
+        </form>
+        <form action="/reservations/<%= reservation.id %>/cancel" method="POST">
+          <button class="btn btn-outline-danger w-100" onclick="return confirm('Cancel this booking?')">Cancel Booking</button>
+        </form>
+      <% } %>
+
+      <% if (reservation.status === 'checked_in') { %>
+        <form action="/reservations/<%= reservation.id %>/checkout" method="POST">
+          <button class="btn btn-primary w-100">Check Out Guest</button>
+        </form>
+        <div class="form-text text-center mt-2 text-muted">Room status will change to "cleaning".</div>
+      <% } %>
+
+      <% if (reservation.status === 'checked_out' || reservation.status === 'cancelled') { %>
+        <div class="text-center text-muted py-3">
+          No actions available.<br>This reservation is closed.
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
