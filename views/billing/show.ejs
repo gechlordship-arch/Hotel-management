@@ -1,0 +1,158 @@
+<style>
+  @media print {
+    body { background: #fff; }
+    .navbar, .karnid-footer, .no-print { display: none !important; }
+    .container { width: 100%; max-width: 100%; padding: 0; }
+    .card { border: none !important; box-shadow: none !important; }
+    .invoice-box { border: 1px solid #ddd !important; padding: 20px !important; }
+  }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4 no-print">
+  <div>
+    <h1 class="mb-0">Invoice #<%= reservation.id %></h1>
+    <p class="text-muted mb-0">Billing & Payment</p>
+  </div>
+  <div>
+    <button onclick="window.print()" class="btn btn-primary">🖨️ Print Invoice</button>
+    <a href="/reservations/<%= reservation.id %>" class="btn btn-outline-secondary">← Back to Booking</a>
+  </div>
+</div>
+
+<div class="card p-4 p-md-5 invoice-box">
+  <!-- Invoice Header -->
+  <div class="row mb-5">
+    <div class="col-sm-6">
+      <img src="/images/logo/logo.jpg" alt="Karnid" style="height:60px; border-radius:6px;" class="mb-2" />
+      <h4 class="mb-1 brand-navy fw-bold">Karnid International Hotel & SPA</h4>
+      <p class="text-muted small mb-0">Luxury. Comfort. Wellness.</p>
+      <p class="text-muted small mb-0">Addis Ababa, Ethiopia</p>
+    </div>
+    <div class="col-sm-6 text-sm-end mt-4 mt-sm-0">
+      <h5 class="text-muted mb-1">INVOICE</h5>
+      <h3 class="mb-3">#<%= reservation.id %></h3>
+      <p class="mb-1"><strong>Date:</strong> <%= new Date().toLocaleDateString() %></p>
+      <p class="mb-1"><strong>Status:</strong> <%= reservation.status.replace('_', ' ').toUpperCase() %></p>
+    </div>
+  </div>
+
+  <!-- Billed To & Stay Details -->
+  <div class="row mb-5">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+      <h6 class="text-muted text-uppercase mb-2">Billed To</h6>
+      <h5 class="mb-1"><%= reservation.guest.full_name %></h5>
+      <p class="mb-1"><%= reservation.guest.phone %></p>
+      <p class="mb-1"><%= reservation.guest.email || '—' %></p>
+      <p class="mb-0"><%= reservation.guest.country || '—' %></p>
+    </div>
+    <div class="col-sm-6">
+      <h6 class="text-muted text-uppercase mb-2">Stay Details</h6>
+      <p class="mb-1"><strong>Room:</strong> <%= reservation.room.room_number %> (<%= reservation.room.roomType.name %>)</p>
+      <p class="mb-1"><strong>Check-In:</strong> <%= new Date(reservation.check_in_date).toLocaleDateString() %></p>
+      <p class="mb-1"><strong>Check-Out:</strong> <%= new Date(reservation.check_out_date).toLocaleDateString() %></p>
+      <p class="mb-0"><strong>Guests:</strong> <%= reservation.adults %> Adults, <%= reservation.children %> Children</p>
+    </div>
+  </div>
+
+  <!-- Charges Table -->
+  <table class="table table-bordered mb-5">
+    <thead class="table-light">
+      <tr>
+        <th>Description</th>
+        <th class="text-center">Qty (Nights)</th>
+        <th class="text-end">Rate</th>
+        <th class="text-end">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          Room Charge — <%= reservation.room.roomType.name %>
+          <div class="small text-muted">Room <%= reservation.room.room_number %></div>
+        </td>
+        <td class="text-center">
+          <%= Math.ceil((new Date(reservation.check_out_date) - new Date(reservation.check_in_date)) / (1000 * 60 * 60 * 24)) %>
+        </td>
+        <td class="text-end">$<%= Number(reservation.room.roomType.base_price).toFixed(2) %></td>
+        <td class="text-end fw-bold">$<%= Number(reservation.total_amount).toFixed(2) %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Totals -->
+  <div class="row justify-content-end mb-5">
+    <div class="col-md-5">
+      <table class="table table-sm table-borderless">
+        <tr>
+          <td class="text-muted">Total Charges</td>
+          <td class="text-end">$<%= Number(reservation.total_amount).toFixed(2) %></td>
+        </tr>
+        <tr>
+          <td class="text-muted">Amount Paid</td>
+          <td class="text-end text-success">-$<%= paid.toFixed(2) %></td>
+        </tr>
+        <tr class="border-top">
+          <td class="fw-bold fs-5 pt-3">Balance Due</td>
+          <td class="text-end fw-bold fs-5 pt-3 <%= balance > 0 ? 'text-danger' : 'text-success' %>">
+            $<%= balance.toFixed(2) %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Payment History & Form -->
+  <div class="row no-print">
+    <div class="col-md-6 mb-4 mb-md-0">
+      <h6 class="text-muted text-uppercase mb-3">Payment History</h6>
+      <% if (reservation.payments.length === 0) { %>
+        <p class="text-muted fst-italic">No payments recorded yet.</p>
+      <% } else { %>
+        <ul class="list-group">
+          <% reservation.payments.forEach(p => { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>$<%= Number(p.amount).toFixed(2) %></strong> via <%= p.method.replace('_', ' ') %>
+                <div class="small text-muted"><%= new Date(p.paid_at).toLocaleString() %></div>
+              </div>
+              <span class="badge bg-success"><%= p.status %></span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+
+    <div class="col-md-6">
+      <% if (balance > 0) { %>
+        <div class="card bg-light border-0">
+          <div class="card-body p-4">
+            <h6 class="text-muted text-uppercase mb-3">Record Payment</h6>
+            <form action="/billing/<%= reservation.id %>/pay" method="POST">
+              <div class="mb-3">
+                <label class="form-label">Amount ($)</label>
+                <input type="number" step="0.01" name="amount" class="form-control" value="<%= balance.toFixed(2) %>" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Payment Method</label>
+                <select name="method" class="form-select">
+                  <option value="cash">Cash</option>
+                  <option value="credit_card">Credit Card</option>
+                  <option value="bank_transfer">Bank Transfer</option>
+                </select>
+              </div>
+              <button class="btn btn-success w-100">Submit Payment</button>
+            </form>
+          </div>
+        </div>
+      <% } else if (balance === 0) { %>
+        <div class="alert alert-success text-center py-4">
+          <h4 class="mb-0">✅ Fully Paid</h4>
+          <p class="mb-0 mt-2">This invoice is settled.</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <hr class="mt-5 mb-4">
+  <p class="text-center text-muted small mb-0">Thank you for choosing Karnid International Hotel & SPA.</p>
+</div>
